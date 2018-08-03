@@ -1,0 +1,71 @@
+version: '3'
+
+# SERVICES —————————————————————————————————————————————————————————————————————
+services:
+  # |- —————————————————— -|
+  # |- database / mongodb -|
+  # |- —————————————————— -|
+  mongodb:
+    image: mongo:3.6
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - scraper-compose-net
+
+  # |- ———————————————————————— -|
+  # |- database / mongo-express -|
+  # |- ———————————————————————— -|
+  mongo-express:
+    image: mongo-express
+    restart: always
+    depends_on:
+      - mongodb
+    ports:
+      - "8081:8081"
+    links:
+      - mongodb:mongo
+    networks:
+      - scraper-compose-net
+
+  # |- ———————————————— -|
+  # |- queue / rabbitmq -|
+  # |- ———————————————— -|
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - scraper-compose-net
+
+
+  # |- ———————————— -|
+  # |- microservice -|
+  # |- ———————————— -|
+  microservice:
+    image: scraper-microservice
+    restart: always
+    depends_on:
+      - rabbitmq
+      - mongodb
+    networks:
+      - scraper-compose-net
+
+  # |- ————————————————— -|
+  # |- scraper / twitter -|
+  # |- ————————————————— -|
+  scraper-twitter:
+    image: scraper-twitter
+    restart: always
+    depends_on:
+      - microservice
+    env_file:
+      - docker-scraper-twitter.env
+    networks:
+      - scraper-compose-net
+
+# NETWORKS —————————————————————————————————————————————————————————————————————
+networks:
+  scraper-compose-net:
+    driver: bridge
