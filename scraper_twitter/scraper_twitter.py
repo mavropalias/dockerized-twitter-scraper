@@ -10,9 +10,9 @@ import os
 import string
 import time
 from enum import Enum
-
 import tweepy
 from nameko.standalone.rpc import ClusterRpcProxy
+import config
 
 # environment variable names
 ENV_AMQP_URI = "AMQP_URI"
@@ -53,7 +53,7 @@ class TweetFilter(object):
     Accepts a tweet Object and provides a set of filtering methods
     """
 
-    banned_terms = ['bitcoin gold', 'bitcoin cash']
+    banned_terms = config.banned_terms
 
     def __init__(self, tweet):
         self.tweet = self.filterTweetData(tweet)
