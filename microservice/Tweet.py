@@ -4,26 +4,41 @@ This module includes the Tweet class and related data structures
 
 
 class Tweet(object):
-    tweet_id = 0
+    coordinates = ""
     created_at = ""
+    source = ""
     text = ""
     text_normal = ""
-    source = ""
-    coordinates = ""
-
+    tweet_id = 0
+    user_followers_count = 0
     user_id = 0
     user_is_verified = False
-    user_followers_count = 0
     user_listed_count = 0
 
-    def __init__(self):
-        pass
+    def __init__(self, raw_tweet):
+        if raw_tweet is not None:
+            self.coordinates = raw_tweet['coordinates']
+            self.created_at = raw_tweet['created_at']
+            self.source = raw_tweet['source']
+            self.text = raw_tweet['text']
+            self.tweet_id = raw_tweet['id']
+            self.user_followers_count = raw_tweet['user_followers_count']
+            self.user_id = raw_tweet['user_id']
+            self.user_is_verified = raw_tweet['user_is_verified']
+            self.user_listed_count = raw_tweet['user_listed_count']
 
-    def cleanup_and_analyze(self):
-        self.normalize()
-
-    def normalize(self):
-        self.text_normal = TweetNormalizer(self.text).normalize()
+    def toCleanDict(self):
+        return {
+            "tweet_id": self.tweet_id,
+            "created_at": self.created_at,
+            "text": TweetNormalizer(self.text).normalize(),
+            "source": self.source,
+            "coordinates": self.coordinates,
+            "user_id": self.user_id,
+            "user_is_verified": self.user_is_verified,
+            "user_followers_count": self.user_followers_count,
+            "user_listed_count": self.user_listed_count
+        }
 
 
 class TweetNormalizer(object):

@@ -15,19 +15,6 @@ class ScraperMicroService:
     collection = db.tweets
 
     @rpc
-    def on_tweet(self, tweet):
-        rt = Tweet()
-
-        rt.tweet_id = tweet["id"]
-        rt.created_at = tweet["created_at"]
-        rt.text = tweet["text"]
-        rt.source = tweet["source"]
-        rt.coordinates = tweet["coordinates"]
-        rt.user_id = tweet["user_id"]
-        rt.user_is_verified = tweet["user_is_verified"]
-        rt.user_followers_count = tweet["user_followers_count"]
-        rt.user_listed_count = tweet["user_listed_count"]
-
-        rt.cleanup_and_analyze()
-
-        self.collection.insert_one(tweet)
+    def on_tweet(self, raw_tweet):
+        tweet = Tweet(raw_tweet)
+        self.collection.insert_one(tweet.toCleanDict())
