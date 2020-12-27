@@ -1,5 +1,6 @@
 .DS_Store
-/.vscode/settings.json
+.vscode
 __pycache__
 *.code-workspace
 docker-scraper-twitter.env
+config.py
