@@ -35,7 +35,6 @@ class TweetNormalizer(object):
         self.tweet = tweet
 
     def normalize(self):
-        # TODO remove retweets
         return self.lowercase().strip_whitespace().get_text()
 
     def lowercase(self):
