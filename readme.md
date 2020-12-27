@@ -21,6 +21,10 @@ TWITTER_API_FILTER=keyword
 AMQP_URI=amqp://guest:guest@rabbitmq
 ```
 
+## Config
+
+Using the `config.sample.py` file as reference, create a `config.py` file in the same location, and customize its contents as needed.
+
 ## Start the service
 
 `docker-compose up`
