@@ -21,10 +21,14 @@ TWITTER_API_FILTER=keyword
 AMQP_URI=amqp://guest:guest@rabbitmq
 ```
 
-## RabbitMQ admin panel
+## Start the service
+
+`docker-compose up`
+
+### RabbitMQ admin panel
 
 http://localhost:15672
 
-## MongoDB admin panel
+### MongoDB admin panel
 
 http://localhost:8081
