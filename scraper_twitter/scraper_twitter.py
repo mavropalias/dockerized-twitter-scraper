@@ -149,7 +149,7 @@ def authenticate():
 
 if __name__ == "__main__":
     """
-    Start Twitter stream listenere
+    Start Twitter stream listener
     """
     print(f"Starting the Twitter scraper with filter: {Twitter.FILTER.value}")
     auth, api = authenticate()
