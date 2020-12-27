@@ -122,8 +122,9 @@ class MyStreamListener(tweepy.StreamListener):
     def on_error(self, status_code):
         if status_code == 420:
             # returning False in on_data disconnects the stream
-            print("Error 420")
-            time.sleep(30)
+            print("Error 420. Waiting to reconnect, with backoff.")
+            return True
+        else:
             return False
 
 
